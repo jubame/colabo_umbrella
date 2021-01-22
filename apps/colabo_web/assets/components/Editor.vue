@@ -28,9 +28,13 @@ export default {
     );
 
     EventBus.$on('new_diff', 
-      (diff) => {
+      (patches) => {
+        let wasPatchedArray
         console.log('EventBus: new_diff received')
-        console.log(diff)
+        console.log(patches)
+        console.log('Patch es')
+        let appliedPatchResult = dmp.patch_apply(patches, this.content)
+        this.content = appliedPatchResult[0]
       }
     );
 

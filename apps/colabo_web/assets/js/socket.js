@@ -70,7 +70,7 @@ function Colabo(socket) {
   let channel = socket.channel("lobby", {})
 
   channel.on("new_diff", response => {
-    EventBus.$emit('new_diff', response)
+    EventBus.$emit('new_diff', response.new_diff)
 
   })
 
