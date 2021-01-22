@@ -6,8 +6,20 @@
 </template>
 
 <script>
+
+import {initializeColabo} from './js/socket'
+
 export default {
-  name: 'App'
+  name: 'App',
+  created(){
+    let colabo = initializeColabo()
+    console.log('APP CREATED')
+    colabo.join()
+    .receive("ok", tok => {
+      console.log('Joined colabo lobby.')
+    })
+    .receive("error", resp => { console.log("Unable to join", resp) })
+  }
 }
 </script>
 
