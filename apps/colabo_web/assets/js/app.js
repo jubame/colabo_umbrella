@@ -13,3 +13,17 @@ import "../css/app.scss"
 //     import socket from "./socket"
 //
 import "phoenix_html"
+
+
+import Vue from 'vue'
+
+
+/* eslint-disable no-new */
+new Vue({
+  el: '#vue-app',
+  data() {
+    return {
+        message: 'hello, world!'
+    }
+}
+})

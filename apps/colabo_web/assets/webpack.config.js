@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = (env, options) => {
   const devMode = options.mode !== 'production';
@@ -35,19 +36,35 @@ module.exports = (env, options) => {
           }
         },
         {
+          test: /\.vue$/,
+          loader: 'vue-loader'
+        },
+        {
           test: /\.[s]?css$/,
-          use: [
+          use:  [// [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader',],
+            'vue-style-loader',
             MiniCssExtractPlugin.loader,
-            'css-loader',
-            'sass-loader',
-          ],
+            'css-loader'
+          ]
         }
       ]
     },
     plugins: [
       new MiniCssExtractPlugin({ filename: '../css/app.css' }),
-      new CopyWebpackPlugin([{ from: 'static/', to: '../' }])
+      new CopyWebpackPlugin([{ from: 'static/', to: '../' }]),
+      new VueLoaderPlugin()
     ]
-    .concat(devMode ? [new HardSourceWebpackPlugin()] : [])
+    .concat(devMode ? [new HardSourceWebpackPlugin()] : []),
+    /*
+    [Vue warn]: You are using the runtime-only build of Vue where the template
+    option is not available. Either pre-compile the templates into render
+    functions, or use the compiler-included build.
+    https://github.com/vuejs-templates/webpack/issues/215#issuecomment-238095102
+    */
+    resolve: {
+      alias: {
+        vue: 'vue/dist/vue.js'
+      }
+    }
   }
 };
