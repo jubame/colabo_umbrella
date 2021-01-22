@@ -25,6 +25,6 @@
       </section>
     </header>
     <div id="app"></div>
-    <div>patata</div>
+    <!-- <div>patata</div> -->
   </body>
 </html>

@@ -9,5 +9,9 @@ export default {
 </script>
 
 <style>
-
+textarea {
+    width: 80%;
+    height: 90%;
+    margin: auto;
+}
 </style>

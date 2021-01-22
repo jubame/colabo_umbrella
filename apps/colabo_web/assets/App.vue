@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img src="./static/images/aoba_suzukaze.png">
+   <!-- <img src="./static/images/aoba_suzukaze.png"> -->
     <router-view/>
   </div>
 </template>
@@ -18,6 +18,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 </style>
