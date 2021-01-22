@@ -35,7 +35,8 @@ export default {
               console.log(this.previousContent)
               console.log(this.content)
 
-              let d = dmp.diff_main(this.previousContent, this.content)
+              // let d = dmp.diff_main(this.previousContent, this.content)
+              let d = dmp.patch_make(this.previousContent, this.content)
               console.log(d)
 
               this.hasChanged = false
