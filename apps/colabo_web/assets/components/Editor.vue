@@ -1,10 +1,17 @@
 <template>
-  <textarea></textarea>
+  <textarea v-model="content"></textarea>
 </template>
 
 <script>
 export default {
-  name: 'Editor'
+  name: 'Editor',
+  data() {
+        return {
+            content: ''
+        }
+  }
+
+  
 }
 </script>
 
