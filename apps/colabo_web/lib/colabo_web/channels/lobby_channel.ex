@@ -7,7 +7,7 @@ defmodule ColaboWeb.LobbyChannel do
 
 
   def handle_in("new_diff", %{"diff" => diff}, socket) do
-    #broadcast!(socket, "new_msg", %{body: body})
+    broadcast_from!(socket, "new_diff", %{new_diff: diff})
     IO.inspect(diff)
     {:noreply, socket}
   end

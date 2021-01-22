@@ -7,6 +7,7 @@
 // Pass the token on params as below. Or remove it
 // from the params if you are not using authentication.
 import {Socket} from "phoenix"
+import {EventBus} from '../main.js'
 
 let colabo
 
@@ -67,6 +68,11 @@ function initializeColabo() {
 function Colabo(socket) {
   // Now that you are connected, you can join channels with a topic:
   let channel = socket.channel("lobby", {})
+
+  channel.on("new_diff", response => {
+    EventBus.$emit('new_diff', response)
+
+  })
 
 
   function join(){
