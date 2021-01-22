@@ -24,7 +24,7 @@
         </a>
       </section>
     </header>
-    <div id="vue-app">{{message}}</div>
+    <div id="app"></div>
     <div>patata</div>
   </body>
 </html>
