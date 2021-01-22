@@ -72,14 +72,19 @@ function Colabo(socket) {
   function join(){
     return channel.join()
   }
-  /*
-  channel.join()
-    .receive("ok", resp => { console.log("Joined successfully", resp) })
-    .receive("error", resp => { console.log("Unable to join", resp) })
-  */
+  function push(diff){
+    channel.push("new_diff", {diff: diff})
+    .receive("ok", response => {
+      console.log(response)
+    })
+    .receive("error", response => {
+      console.log(response)
+    })
+  }
 
   return Object.freeze({
-    join : join
+    join: join,
+    push: push
   });
   
 }
@@ -90,4 +95,4 @@ function Colabo(socket) {
 
 
 
-export {initializeColabo}
+export {initializeColabo, colabo}

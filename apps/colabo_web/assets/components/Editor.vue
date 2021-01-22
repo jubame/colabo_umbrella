@@ -7,6 +7,8 @@
 import diff_match_patch from "diff_match_patch"
 let dmp = new diff_match_patch.diff_match_patch();
 
+import {colabo} from '../js/socket.js'
+
 export default {
   name: 'Editor',
   data() {
@@ -38,6 +40,7 @@ export default {
               // let d = dmp.diff_main(this.previousContent, this.content)
               let d = dmp.patch_make(this.previousContent, this.content)
               console.log(d)
+              colabo.push(d)
 
               this.hasChanged = false
               this.previousContent = this.content
