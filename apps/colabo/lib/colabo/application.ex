@@ -8,7 +8,7 @@ defmodule Colabo.Application do
   def start(_type, _args) do
     children = [
       # Start the Ecto repository
-      Colabo.Repo,
+      # Colabo.Repo,
       # Start the PubSub system
       {Phoenix.PubSub, name: Colabo.PubSub}
       # Start a worker by calling: Colabo.Worker.start_link(arg)
