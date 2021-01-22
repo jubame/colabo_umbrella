@@ -29,12 +29,7 @@ export default {
 
     EventBus.$on('new_diff', 
       (patches) => {
-        let wasPatchedArray
-        console.log('EventBus: new_diff received')
-        console.log(patches)
-        console.log('Patch es')
-        let appliedPatchResult = dmp.patch_apply(patches, this.content)
-        this.content = appliedPatchResult[0]
+        this.onNewDiff(patches)
       }
     );
 
@@ -46,6 +41,7 @@ export default {
     push() {
       if (this.hasChanged){
         //alert("PUSH")
+        console.log("PATCH MAKE")
         console.log(this.previousContent)
         console.log(this.content)
 
@@ -66,6 +62,21 @@ export default {
       
       //alert(this.content + "__" + this.previousContent)
       
+    },
+
+    onNewDiff(patches) {
+      let wasPatchedArray
+      console.log('EventBus: new_diff received')
+      console.log('Patch es')
+      console.log(patches)
+      console.log('content es')
+      console.log(this.content)
+      let appliedPatchResult = dmp.patch_apply(patches, this.content)
+      console.log('appliedPatchResult es')
+      console.log(appliedPatchResult[0])
+      this.previousContent = appliedPatchResult[0]
+      this.content = appliedPatchResult[0]
+
     }
 
 
