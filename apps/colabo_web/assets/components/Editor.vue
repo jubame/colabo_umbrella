@@ -28,8 +28,8 @@ export default {
     );
 
     EventBus.$on('new_diff', 
-      (patches) => {
-        this.onNewDiff(patches)
+      (patch) => {
+        this.onNewDiff(patch)
       }
     );
 
@@ -37,8 +37,13 @@ export default {
       console.log('lobby_joined')
       //console.log(colabo.getDiffs())
       
-      colabo.getDiffs().receive("ok", response => {
-        console.log(response)
+      colabo.getDiffs().receive("ok", patches => {
+        let appliedPatchResult
+        for(var patch of patches) {
+          appliedPatchResult = dmp.patch_apply(patch, this.content)
+          this.previousContent = appliedPatchResult[0]
+          this.content = appliedPatchResult[0]
+        }
       })
       .receive("error", response => {
         console.log('Error getting diffs')
@@ -76,14 +81,14 @@ export default {
       
     },
 
-    onNewDiff(patches) {
+    onNewDiff(patch) {
       let wasPatchedArray
       console.log('EventBus: new_diff received')
       console.log('Patch es')
-      console.log(patches)
+      console.log(patch)
       console.log('content es')
       console.log(this.content)
-      let appliedPatchResult = dmp.patch_apply(patches, this.content)
+      let appliedPatchResult = dmp.patch_apply(patch, this.content)
       console.log('appliedPatchResult es')
       console.log(appliedPatchResult[0])
       this.previousContent = appliedPatchResult[0]

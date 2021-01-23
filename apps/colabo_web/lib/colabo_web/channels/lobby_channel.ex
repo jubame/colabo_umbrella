@@ -14,7 +14,7 @@ defmodule ColaboWeb.LobbyChannel do
 
 
   def handle_in("new_diff", %{"diff" => diff}, socket) do
-    IO.puts("PatchStore.state es #{PatchStore.state()}")
+    IO.puts("PatchStore.state es #{inspect(PatchStore.state())}")
     PatchStore.add(diff)
     broadcast_from!(socket, "new_diff", %{new_diff: diff})
     IO.inspect(diff)
