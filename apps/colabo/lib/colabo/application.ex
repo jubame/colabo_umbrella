@@ -10,9 +10,10 @@ defmodule Colabo.Application do
       # Start the Ecto repository
       # Colabo.Repo,
       # Start the PubSub system
-      {Phoenix.PubSub, name: Colabo.PubSub}
+      {Phoenix.PubSub, name: Colabo.PubSub},
       # Start a worker by calling: Colabo.Worker.start_link(arg)
       # {Colabo.Worker, arg}
+      {Colabo.PatchStore, 0}
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one, name: Colabo.Supervisor)
