@@ -33,6 +33,18 @@ export default {
       }
     );
 
+    EventBus.$on('lobby_joined', () => {
+      console.log('lobby_joined')
+      //console.log(colabo.getDiffs())
+      
+      colabo.getDiffs().receive("ok", response => {
+        console.log(response)
+      })
+      .receive("error", response => {
+        console.log('Error getting diffs')
+      })
+    });
+
 
   },
 

@@ -8,6 +8,7 @@
 <script>
 
 import {initializeColabo} from './js/socket'
+import {EventBus} from './main.js'
 
 export default {
   name: 'App',
@@ -17,6 +18,7 @@ export default {
     colabo.join()
     .receive("ok", tok => {
       console.log('Joined colabo lobby.')
+      EventBus.$emit('lobby_joined')
     })
     .receive("error", resp => { console.log("Unable to join", resp) })
   }

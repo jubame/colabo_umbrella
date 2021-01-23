@@ -88,9 +88,20 @@ function Colabo(socket) {
     })
   }
 
+  function getDiffs(){
+    /*
+    Si no pongo el segundo parámetro salta el error
+    "TypeError: Cannot read property 'constructor' of null"
+    */
+    return channel.push("state", {})
+    
+  }
+
+
   return Object.freeze({
     join: join,
-    push: push
+    push: push,
+    getDiffs: getDiffs
   });
   
 }
