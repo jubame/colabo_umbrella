@@ -1,7 +1,7 @@
 <template>
   <div id="editor">
     <label for="push-interval">Push interval if textarea changed (in milliseconds):</label>
-    <input type="text" id="push-interval">
+    <input type="text" id="push-interval" v-model="pushInterval" @blur="resetInterval" >
     <textarea v-model="content" @input="onTextChange"></textarea>
   </div>
 </template>
@@ -19,16 +19,18 @@ export default {
       return {
         content: '',
         previousContent: '',
-        hasChanged: false
+        hasChanged: false,
+        pushInterval: 1000,
+        pushIntervalTimer: null
       }
   },
 
   created() {
     //alert("CREATED")
     
-    setInterval(
+    this.pushIntervalTimer = setInterval(
       this.push,
-      5000
+      this.pushInterval
     );
 
     EventBus.$on('new_diff', 
@@ -103,6 +105,14 @@ export default {
       this.previousContent = appliedPatchResult[0]
       this.content = appliedPatchResult[0]
 
+    },
+
+    resetInterval(){
+      clearInterval(this.pushIntervalTimer)
+      setInterval(
+        this.push,
+        this.pushInterval
+      );
     }
 
 
