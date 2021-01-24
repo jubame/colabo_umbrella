@@ -34,16 +34,14 @@ export default {
     );
 
     EventBus.$on('lobby_joined', () => {
-      console.log('lobby_joined')
-      //console.log(colabo.getDiffs())
+      console.log('Editor.vue: received lobby_joined event')
       
       colabo.getDiffs().receive("ok", patches => {
-        let appliedPatchResult
+        
         for(var patch of patches) {
-          appliedPatchResult = dmp.patch_apply(patch, this.content)
-          this.previousContent = appliedPatchResult[0]
-          this.content = appliedPatchResult[0]
+          this.apply_patch(patch)
         }
+        console.log('***************')
       })
       .receive("error", response => {
         console.log('Error getting diffs')
@@ -58,14 +56,16 @@ export default {
     push() {
       if (this.hasChanged){
         //alert("PUSH")
-        console.log("PATCH MAKE")
-        console.log(this.previousContent)
-        console.log(this.content)
+        console.log('---------------')
+        console.log('Making patch:')
+        console.log(`from: ${this.previousContent}`)
+        console.log(`to: ${this.content}`)
 
         // let d = dmp.diff_main(this.previousContent, this.content)
-        let d = dmp.patch_make(this.previousContent, this.content)
-        console.log(d)
-        colabo.push(d)
+        let patch = dmp.patch_make(this.previousContent, this.content)
+        console.log(patch)
+        colabo.push(patch)
+        console.log('---------------')
 
         this.hasChanged = false
         this.previousContent = this.content
@@ -83,14 +83,19 @@ export default {
 
     onNewDiff(patch) {
       let wasPatchedArray
-      console.log('EventBus: new_diff received')
-      console.log('Patch es')
+      console.log('Editor.vue: new_diff event received')
+      this.apply_patch(patch)
+      console.log('***************')
+    },
+
+    apply_patch(patch) {
+      let appliedPatchResult
+      console.log('***************')
+      console.log('Applying patch:')
       console.log(patch)
-      console.log('content es')
-      console.log(this.content)
-      let appliedPatchResult = dmp.patch_apply(patch, this.content)
-      console.log('appliedPatchResult es')
-      console.log(appliedPatchResult[0])
+      console.log(`over: ${this.content}`)
+      appliedPatchResult = dmp.patch_apply(patch, this.content)
+      console.log(`result: ${appliedPatchResult[0]}`)
       this.previousContent = appliedPatchResult[0]
       this.content = appliedPatchResult[0]
 

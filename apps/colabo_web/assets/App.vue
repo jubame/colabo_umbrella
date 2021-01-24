@@ -14,10 +14,10 @@ export default {
   name: 'App',
   created(){
     let colabo = initializeColabo()
-    console.log('APP CREATED')
+    console.log('App.vue created')
     colabo.join()
     .receive("ok", tok => {
-      console.log('Joined colabo lobby.')
+      console.log('Joined colabo lobby. Emitting lobby_joined event')
       EventBus.$emit('lobby_joined')
     })
     .receive("error", resp => { console.log("Unable to join", resp) })

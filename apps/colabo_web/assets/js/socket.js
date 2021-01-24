@@ -81,9 +81,11 @@ function Colabo(socket) {
   function push(diff){
     channel.push("new_diff", {diff: diff})
     .receive("ok", response => {
+      console.log("Server: push ok")
       console.log(response)
     })
     .receive("error", response => {
+      console.log("Server: push error")
       console.log(response)
     })
   }

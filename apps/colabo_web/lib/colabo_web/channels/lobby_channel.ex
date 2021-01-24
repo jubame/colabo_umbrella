@@ -18,7 +18,7 @@ defmodule ColaboWeb.LobbyChannel do
     PatchStore.add(diff)
     broadcast_from!(socket, "new_diff", %{new_diff: diff})
     IO.inspect(diff)
-    {:noreply, socket}
+    {:reply, :ok, socket}
   end
 
 
