@@ -1,5 +1,9 @@
 <template>
-  <textarea v-model="content" @input="onTextChange"></textarea>
+  <div id="editor">
+    <label for="push-interval">Push interval if textarea changed (in milliseconds):</label>
+    <input type="text" id="push-interval">
+    <textarea v-model="content" @input="onTextChange"></textarea>
+  </div>
 </template>
 
 <script>
@@ -109,9 +113,24 @@ export default {
 </script>
 
 <style>
+
+#editor {
+  margin: 20px 10%;
+  height: 100%;
+  text-align: left;
+}
+
+#editor label {
+  display: inline;
+}
+
+#push-interval {
+  display: inline;
+  width: 200px;
+}
+
 textarea {
-    width: 80%;
     height: 90%;
-    margin: auto;
+    margin: 20px auto;
 }
 </style>
