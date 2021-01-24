@@ -48,6 +48,13 @@ export default {
 
     EventBus.$on('lobby_joined', () => {
       console.log('Editor.vue: received lobby_joined event')
+      /* 
+      Reset previousContent and content in case we are rejoining after
+      connection loss, because all patches are going to be reapplied,
+      and that requires starting with an empty string.
+      */
+      this.previousContent = ''
+      this.content = ''
       
       colabo.getDiffs().receive("ok", patches => {
         
