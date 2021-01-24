@@ -16,6 +16,12 @@ function initializeColabo() {
 
   let socket = new Socket("/socket", {params: {/*token: window.userToken*/}})
 
+  socket.onError( () => {
+    console.log("there was an error with the connection!")
+    EventBus.$emit('socket_error', null)
+  })
+  
+
   // When you connect, you'll often need to authenticate the client.
   // For example, imagine you have an authentication plug, `MyAuth`,
   // which authenticates the session and assigns a `:current_user`.

@@ -2,7 +2,7 @@
   <div id="editor">
     <label for="push-interval">Push interval if textarea changed (in milliseconds):</label>
     <input type="text" id="push-interval" v-model="pushInterval" @blur="resetInterval" >
-    <textarea v-model="content" @input="onTextChange"></textarea>
+    <textarea v-model="content" @input="onTextChange" :disabled="disabled"></textarea>
   </div>
 </template>
 
@@ -21,7 +21,8 @@ export default {
         previousContent: '',
         hasChanged: false,
         pushInterval: 1000,
-        pushIntervalTimer: null
+        pushIntervalTimer: null,
+        disabled: true
       }
   },
 
@@ -39,6 +40,12 @@ export default {
       }
     );
 
+    EventBus.$on('socket_error', 
+      () => {
+        this.disabled = true
+      }
+    );
+
     EventBus.$on('lobby_joined', () => {
       console.log('Editor.vue: received lobby_joined event')
       
@@ -48,6 +55,7 @@ export default {
           this.apply_patch(patch)
         }
         console.log('***************')
+        this.disabled = false
       })
       .receive("error", response => {
         console.log('Error getting diffs')
