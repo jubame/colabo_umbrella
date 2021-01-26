@@ -22,7 +22,8 @@ export default {
         hasChanged: false,
         pushInterval: 1000,
         pushIntervalTimer: null,
-        disabled: true
+        disabled: true,
+        lastSelectionContentLength: 0
       }
   },
 
@@ -37,6 +38,12 @@ export default {
     EventBus.$on('new_diff', 
       (patch) => {
         this.onNewDiff(patch)
+      }
+    );
+
+    EventBus.$on('selection_range', 
+      (range) => {
+        console.log("received selection_range")
       }
     );
 
@@ -98,6 +105,7 @@ export default {
 
         this.hasChanged = false
         this.previousContent = this.content
+        
       }
     },
 
@@ -124,7 +132,20 @@ export default {
         // do something with your range
         console.log(range.start)
         console.log(range.end)
-        colabo.pushSelectionRange(range)
+        /*
+        Avoid sending range changes when text is being added or deleted,
+        because I push every this.pushInterval and new text might not have been
+        sent yet to the server (and therefore to the rest of clients).
+        I am not using this.hasChanged from onTextChange because both
+        onTextChange and this function fire at the same time (I would
+        need for onTextChange to execute first).
+        */
+        if(this.lastSelectionContentLength == this.content.length){
+          colabo.pushSelectionRange(range)
+        }
+
+        this.lastSelectionContentLength = this.content.length
+        
       }
     },
 

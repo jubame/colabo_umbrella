@@ -23,6 +23,8 @@ defmodule ColaboWeb.LobbyChannel do
 
   def handle_in("selection_range", %{"range" => range}, socket) do
     IO.inspect(range)
+    IO.inspect(socket)
+    broadcast_from!(socket, "selection_range", %{range: range})
     {:reply, :ok, socket}
   end
 
