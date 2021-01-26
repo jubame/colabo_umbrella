@@ -120,6 +120,18 @@ function Colabo(socket) {
     })
   }
 
+  function pushSelectionRange(range){
+    channel.push("selection_range", {range: range})
+    .receive("ok", response => {
+      console.log("Server: push ok")
+      console.log(response)
+    })
+    .receive("error", response => {
+      console.log("Server: push error")
+      console.log(response)
+    })
+  }
+
   function getDiffs(){
     /*
     Si no pongo el segundo parámetro salta el error
@@ -133,6 +145,7 @@ function Colabo(socket) {
   return Object.freeze({
     join: join,
     push: push,
+    pushSelectionRange: pushSelectionRange,
     getDiffs: getDiffs
   });
   

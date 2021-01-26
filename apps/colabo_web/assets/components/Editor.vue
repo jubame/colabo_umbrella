@@ -122,6 +122,9 @@ export default {
           end: activeElement.selectionEnd
         }
         // do something with your range
+        console.log(range.start)
+        console.log(range.end)
+        colabo.pushSelectionRange(range)
       }
     },
 
