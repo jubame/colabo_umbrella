@@ -21,9 +21,11 @@ export default {
         previousContent: '',
         hasChanged: false,
         pushInterval: 1000,
+        pushSelectionRangeInterval: 500,
         pushIntervalTimer: null,
         disabled: true,
-        lastSelectionContentLength: 0
+        lastSelectionContentLength: 0,
+        lastSelectionTime: null
       }
   },
 
@@ -124,6 +126,7 @@ export default {
 
       // make sure this is your textarea
       if (activeElement && activeElement.id === 'my-textarea') {
+        
         console.log("SELECT")
         const range = {
           start: activeElement.selectionStart,
@@ -140,7 +143,10 @@ export default {
         onTextChange and this function fire at the same time (I would
         need for onTextChange to execute first).
         */
-        if(this.lastSelectionContentLength == this.content.length){
+        if(
+          this.lastSelectionContentLength == this.content.length
+          && Date.now()-this.lastSelectionTime > this.pushSelectionRangeInterval ){
+          this.lastSelectionTime = Date.now()
           colabo.pushSelectionRange(range)
         }
 
