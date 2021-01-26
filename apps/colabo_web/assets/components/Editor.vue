@@ -262,6 +262,8 @@ export default {
 #editor {
   margin: 20px 10%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
   text-align: left;
 }
 
@@ -272,11 +274,6 @@ export default {
 #push-interval {
   display: inline;
   width: 200px;
-}
-
-textarea {
-    height: 90%;
-    margin: 20px auto;
 }
 
 textarea:disabled {

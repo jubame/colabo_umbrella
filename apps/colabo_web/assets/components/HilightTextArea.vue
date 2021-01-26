@@ -75,7 +75,7 @@ export default Vue.extend({
   border: solid 1px #a9a9a9;
   border-radius: 3px;
   display: flex;
-  height: 80%;
+  flex: 1;
   margin: 20px 0;
 }
 
