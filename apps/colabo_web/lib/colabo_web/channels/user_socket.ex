@@ -20,9 +20,8 @@ defmodule ColaboWeb.UserSocket do
   @impl true
   def connect(_params, socket, connect_info) do
     IO.puts("HOLA")
-    IO.inspect(connect_info)
-    IO.inspect(socket)
-    {:ok, assign(socket, :peer_data, connect_info.peer_data)}
+    peer_data = %{connect_info.peer_data | address: Tuple.to_list(connect_info.peer_data.address)}
+    {:ok, assign(socket, :peer_data, peer_data)}
   end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:
