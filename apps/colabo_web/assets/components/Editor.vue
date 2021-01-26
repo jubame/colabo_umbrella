@@ -6,7 +6,8 @@
         v-model="content"
         :segments="segments"
         :selection="selection"
-         @update:selection="selection = $event"
+        @input="onTextChange"
+        @update:selection="selection = $event"
         rows="10"
       />
     <!--<textarea id="my-textarea" v-model="content" @input="onTextChange" :disabled="disabled"></textarea>-->
@@ -281,6 +282,10 @@ textarea {
 
 textarea:disabled {
   background: red;
+}
+
+.blue {
+  color: blue;
 }
 
 </style>
