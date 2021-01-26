@@ -8,18 +8,42 @@
 // from the params if you are not using authentication.
 import {Socket} from "phoenix"
 import {EventBus} from '../main.js'
+import {isString} from './utils.js'
 
 let colabo
 
 
 function initializeColabo() {
 
-  let socket = new Socket("/socket", {params: {/*token: window.userToken*/}})
+  // let socket = new Socket("/socket", {params: {/*token: window.userToken*/}})
+  let socket = new Socket("/socket",
+    {
+      params: {
+        token: window.userToken
+      },
+      timeout: 1000,  // Default 10000
+      heartbeatIntervalMs: 3000, // Default 30000,
+      logger: function(kind, msg, data) {
+        if(kind === 'transport' && isString(msg)){
+          console.log(`${kind}: ${msg}`, data)
+          let msgLowerCase = msg.toLowerCase()
+          if(msgLowerCase.includes('heartbeat') && msgLowerCase.includes('timeout')){
+            EventBus.$emit('heartbeat_timeout', null)
+          }
+        }
+        
+      }
+    }
+  )
+
+  console.log(socket)
 
   socket.onError( () => {
     console.log("there was an error with the connection!")
     EventBus.$emit('socket_error', null)
   })
+
+  socket.onClose( () => console.log("the connection dropped") )
   
 
   // When you connect, you'll often need to authenticate the client.

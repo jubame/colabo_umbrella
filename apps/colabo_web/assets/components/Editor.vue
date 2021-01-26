@@ -46,6 +46,12 @@ export default {
       }
     );
 
+    EventBus.$on('heartbeat_timeout', 
+      () => {
+        this.disabled = true
+      }
+    );
+
     EventBus.$on('lobby_joined', () => {
       console.log('Editor.vue: received lobby_joined event')
       /* 
