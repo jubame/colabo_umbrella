@@ -2,7 +2,7 @@
   <div id="editor">
     <label for="push-interval">Push interval if textarea changed (in milliseconds):</label>
     <input type="text" id="push-interval" v-model="pushInterval" @blur="resetInterval" >
-    <textarea v-model="content" @input="onTextChange" :disabled="disabled"></textarea>
+    <textarea id="my-textarea" v-model="content" @input="onTextChange" :disabled="disabled"></textarea>
   </div>
 </template>
 
@@ -75,6 +75,8 @@ export default {
       })
     });
 
+    // https://stackoverflow.com/a/58294874
+    document.addEventListener('selectionchange', this.handleSelection)
 
   },
 
@@ -106,6 +108,21 @@ export default {
       
       //alert(this.content + "__" + this.previousContent)
       
+    },
+
+    handleSelection() {
+      
+      const activeElement = document.activeElement
+
+      // make sure this is your textarea
+      if (activeElement && activeElement.id === 'my-textarea') {
+        console.log("SELECT")
+        const range = {
+          start: activeElement.selectionStart,
+          end: activeElement.selectionEnd
+        }
+        // do something with your range
+      }
     },
 
     onNewDiff(patch) {
