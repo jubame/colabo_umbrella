@@ -53,6 +53,14 @@ export default {
     EventBus.$on('selection_range', 
       (range) => {
         console.log("received selection_range")
+        let textArea = document.getElementById("my-textarea");
+        /*
+        https://stackoverflow.com/a/7486518
+        Cambiar selección de texto
+        */
+        textArea.focus()
+        textArea.selectionStart = range.start
+        textArea.selectionEnd = range.end
       }
     );
 
