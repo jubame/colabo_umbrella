@@ -2,12 +2,20 @@
   <div id="editor">
     <label for="push-interval">Push interval if textarea changed (in milliseconds):</label>
     <input type="text" id="push-interval" v-model="pushInterval" @blur="resetInterval" >
-    <textarea id="my-textarea" v-model="content" @input="onTextChange" :disabled="disabled"></textarea>
+    <HilightTextArea
+        v-model="content"
+        :segments="segments"
+        :selection="selection"
+         @update:selection="selection = $event"
+        rows="10"
+      />
+    <!--<textarea id="my-textarea" v-model="content" @input="onTextChange" :disabled="disabled"></textarea>-->
     <span>Last message received: type {{lastMsgMeta.type}}, from: {{lastMsgMeta.peerData}}</span>
   </div>
 </template>
 
 <script>
+import HilightTextArea from "./HilightTextArea.vue";
 
 import diff_match_patch from "diff_match_patch"
 let dmp = new diff_match_patch.diff_match_patch();
@@ -16,6 +24,9 @@ import {colabo} from '../js/socket.js'
 
 export default {
   name: 'Editor',
+  components: {
+    HilightTextArea
+  },
   data() {
       return {
         content: '',
@@ -23,6 +34,12 @@ export default {
         hasChanged: false,
         hasSelectionChanged: false,
         range: null,
+        selection: {
+          start: 0,
+          end: 0,
+          direction: "none"
+        },
+        segments: [],
         pushInterval: 1000,
         pushSelectionRangeInterval: 500,
         pushIntervalTimer: null,
@@ -32,7 +49,8 @@ export default {
         lastMsgMeta: {
           type: null,
           peerData: null
-        }
+        },
+        automaticSelectionInProgress: false
       }
   },
 
@@ -68,13 +86,22 @@ export default {
         }
         console.log("received selection_range")
         let textArea = document.getElementById("my-textarea");
+        //this.automaticSelectionInProgress = true
         /*
         https://stackoverflow.com/a/7486518
         Cambiar selección de texto
         */
+       /*
         textArea.focus()
         textArea.selectionStart = msg.range.start
         textArea.selectionEnd = msg.range.end
+        */
+       this.segments = []
+       this.segments.push({ start: msg.range.start, end: msg.range.end, tag: { class: "blue" } });
+       //textArea.focus()
+       //textArea.setSelectionRange(msg.range.start, msg.range.end)
+       //this.automaticSelectionInProgress = false
+       
       }
     );
 
@@ -120,6 +147,11 @@ export default {
 
 
   methods: {
+
+    test() {
+      alert("HOLA")
+
+    },
     push() {
       if (this.hasChanged){
         //alert("PUSH")
@@ -156,8 +188,9 @@ export default {
       
     },
 
-    handleSelection() {
-      
+    handleSelection(e) {
+      console.log("event es")
+      console.log(e)
       const activeElement = document.activeElement
 
       // make sure this is your textarea
@@ -179,7 +212,8 @@ export default {
         onTextChange and this function fire at the same time (I would
         need for onTextChange to execute first).
         */
-        if(this.lastSelectionContentLength == this.content.length){
+        if(
+          this.lastSelectionContentLength == this.content.length){
           this.hasSelectionChanged = true
         }
 
