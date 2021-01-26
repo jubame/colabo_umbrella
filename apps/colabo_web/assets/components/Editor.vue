@@ -8,7 +8,6 @@
         :selection="selection"
         @input="onTextChange"
         @update:selection="selection = $event"
-        rows="10"
       />
     <!--<textarea id="my-textarea" v-model="content" @input="onTextChange" :disabled="disabled"></textarea>-->
     <span>Last message received: type {{lastMsgMeta.type}}, from: {{lastMsgMeta.peerData}}</span>
@@ -286,6 +285,7 @@ textarea:disabled {
 
 .blue {
   color: blue;
+  background: yellow;
 }
 
 </style>
