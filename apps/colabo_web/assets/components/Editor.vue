@@ -164,4 +164,9 @@ textarea {
     height: 90%;
     margin: 20px auto;
 }
+
+textarea:disabled {
+  background: red;
+}
+
 </style>
