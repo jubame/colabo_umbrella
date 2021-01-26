@@ -20,6 +20,8 @@ export default {
         content: '',
         previousContent: '',
         hasChanged: false,
+        hasSelectionChanged: false,
+        range: null,
         pushInterval: 1000,
         pushSelectionRangeInterval: 500,
         pushIntervalTimer: null,
@@ -35,6 +37,11 @@ export default {
     this.pushIntervalTimer = setInterval(
       this.push,
       this.pushInterval
+    );
+
+    setInterval(
+      this.pushSelectedRange,
+      this.pushSelectionRangeInterval
     );
 
     EventBus.$on('new_diff', 
@@ -111,6 +118,13 @@ export default {
       }
     },
 
+    pushSelectedRange(){
+      if(this.hasSelectionChanged){
+        colabo.pushSelectionRange(this.range)
+        this.hasSelectionChanged = false
+      }
+    },
+
 
     onTextChange(text) {
       //console.log(text)
@@ -128,13 +142,13 @@ export default {
       if (activeElement && activeElement.id === 'my-textarea') {
         
         console.log("SELECT")
-        const range = {
+        this.range = {
           start: activeElement.selectionStart,
           end: activeElement.selectionEnd
         }
         // do something with your range
-        console.log(range.start)
-        console.log(range.end)
+        console.log(this.range.start)
+        console.log(this.range.end)
         /*
         Avoid sending range changes when text is being added or deleted,
         because I push every this.pushInterval and new text might not have been
@@ -143,11 +157,8 @@ export default {
         onTextChange and this function fire at the same time (I would
         need for onTextChange to execute first).
         */
-        if(
-          this.lastSelectionContentLength == this.content.length
-          && Date.now()-this.lastSelectionTime > this.pushSelectionRangeInterval ){
-          this.lastSelectionTime = Date.now()
-          colabo.pushSelectionRange(range)
+        if(this.lastSelectionContentLength == this.content.length){
+          this.hasSelectionChanged = true
         }
 
         this.lastSelectionContentLength = this.content.length
