@@ -13,7 +13,9 @@ defmodule ColaboWeb.Endpoint do
   socket "/socket", ColaboWeb.UserSocket,
     websocket: [
       # https://elixirforum.com/t/can-phoenix-channel-detect-client-offline-immediately-like-wifi-disconnected/25104/18
-      timeout: 10_000
+      timeout: 10_000,
+      # https://stackoverflow.com/a/58584065
+      connect_info: [:peer_data, :x_headers]
     ],
     longpoll: false
 

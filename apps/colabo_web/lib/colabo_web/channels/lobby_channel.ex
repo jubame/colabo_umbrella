@@ -16,7 +16,7 @@ defmodule ColaboWeb.LobbyChannel do
   def handle_in("new_diff", %{"diff" => diff}, socket) do
     IO.puts("PatchStore.state es #{inspect(PatchStore.state())}")
     PatchStore.add(diff)
-    broadcast_from!(socket, "new_diff", %{new_diff: diff})
+    broadcast_from!(socket, "new_diff", %{peer_data: Kernel.inspect(socket.assigns.peer_data), new_diff: diff})
     IO.inspect(diff)
     {:reply, :ok, socket}
   end
@@ -24,7 +24,7 @@ defmodule ColaboWeb.LobbyChannel do
   def handle_in("selection_range", %{"range" => range}, socket) do
     IO.inspect(range)
     IO.inspect(socket)
-    broadcast_from!(socket, "selection_range", %{range: range})
+    broadcast_from!(socket, "selection_range", %{peer_data: Kernel.inspect(socket.assigns.peer_data), range: range})
     {:reply, :ok, socket}
   end
 

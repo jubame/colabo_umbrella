@@ -3,6 +3,7 @@
     <label for="push-interval">Push interval if textarea changed (in milliseconds):</label>
     <input type="text" id="push-interval" v-model="pushInterval" @blur="resetInterval" >
     <textarea id="my-textarea" v-model="content" @input="onTextChange" :disabled="disabled"></textarea>
+    <span>Last message received: type {{lastMsgMeta.type}}, from: {{lastMsgMeta.peerData}}</span>
   </div>
 </template>
 
@@ -27,7 +28,11 @@ export default {
         pushIntervalTimer: null,
         disabled: true,
         lastSelectionContentLength: 0,
-        lastSelectionTime: null
+        lastSelectionTime: null,
+        lastMsgMeta: {
+          type: null,
+          peerData: null
+        }
       }
   },
 
@@ -45,13 +50,22 @@ export default {
     );
 
     EventBus.$on('new_diff', 
-      (patch) => {
-        this.onNewDiff(patch)
+      (msg) => {
+        this.lastMsgMeta = {
+          type: 'new_diff',
+          peerData: msg.peer_data
+        }
+        
+        this.onNewDiff(msg)
       }
     );
 
     EventBus.$on('selection_range', 
-      (range) => {
+      (msg) => {
+        this.lastMsgMeta = {
+          type: 'selection_range',
+          peerData: msg.peer_data
+        }
         console.log("received selection_range")
         let textArea = document.getElementById("my-textarea");
         /*
@@ -59,8 +73,8 @@ export default {
         Cambiar selección de texto
         */
         textArea.focus()
-        textArea.selectionStart = range.start
-        textArea.selectionEnd = range.end
+        textArea.selectionStart = msg.range.start
+        textArea.selectionEnd = msg.range.end
       }
     );
 
@@ -174,10 +188,10 @@ export default {
       }
     },
 
-    onNewDiff(patch) {
+    onNewDiff(msg) {
       let wasPatchedArray
       console.log('Editor.vue: new_diff event received')
-      this.apply_patch(patch)
+      this.apply_patch(msg.new_diff)
       console.log('***************')
     },
 

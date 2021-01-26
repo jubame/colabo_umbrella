@@ -100,12 +100,12 @@ function Colabo(socket) {
   let channel = socket.channel("lobby", {})
 
   channel.on("new_diff", response => {
-    EventBus.$emit('new_diff', response.new_diff)
+    EventBus.$emit('new_diff', response/*.new_diff*/)
 
   })
 
   channel.on("selection_range", response => {
-    EventBus.$emit('selection_range', response.range)
+    EventBus.$emit('selection_range', response/*.range*/)
 
   })
 
