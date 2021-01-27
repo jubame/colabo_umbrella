@@ -33,7 +33,6 @@ export default {
         previousContent: '',
         hasChanged: false,
         hasSelectionChanged: false,
-        range: null,
         selection: {
           start: 0,
           end: 0,
@@ -160,7 +159,7 @@ export default {
 
     pushSelectedRange(){
       if(this.hasSelectionChanged){
-        colabo.pushSelectionRange(this.range)
+        colabo.pushSelectionRange(this.selection)
         this.hasSelectionChanged = false
       }
     },
@@ -175,12 +174,6 @@ export default {
 
       // make sure this is your textarea
       if (activeElement && activeElement.id === 'my-textarea') {
-        
-        this.range = {
-          start: activeElement.selectionStart,
-          end: activeElement.selectionEnd
-        }
-        // do something with your range
 
         /*
         Avoid sending range changes when text is being added or deleted,
