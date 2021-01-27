@@ -1,4 +1,6 @@
 # Colabo.Umbrella
+## Prueba técnica Elixir
+Después de hacer git clone:
 
 ```
 cd colabo_umbrella
