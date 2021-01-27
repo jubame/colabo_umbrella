@@ -112,7 +112,7 @@ export default {
       this.previousContent = ''
       this.content = ''
       
-      colabo.getDiffs().receive("ok", patches => {
+      colabo.getPatches().receive("ok", patches => {
         
         for(var patch of patches) {
           this.apply_patch(patch)
@@ -121,7 +121,7 @@ export default {
         this.disabled = false
       })
       .receive("error", response => {
-        console.log('Error getting diffs')
+        console.log('Error getting patches')
       })
     });
 

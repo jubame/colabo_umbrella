@@ -136,7 +136,7 @@ function Colabo(socket) {
     })
   }
 
-  function getDiffs(){
+  function getPatches(){
     /*
     Si no pongo el segundo parámetro salta el error
     "TypeError: Cannot read property 'constructor' of null"
@@ -150,7 +150,7 @@ function Colabo(socket) {
     join: join,
     push: push,
     pushSelectionRange: pushSelectionRange,
-    getDiffs: getDiffs
+    getPatches: getPatches
   });
   
 }
