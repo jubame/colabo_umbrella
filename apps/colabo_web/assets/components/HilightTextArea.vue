@@ -13,6 +13,7 @@
       @focus="onFocus"
       @blur="onBlur"
       @update:selection="$emit('update:selection', $event)"
+      :disabled="disabled"
     ></RawHighlightTextArea>
   </div>
 </template>
@@ -45,6 +46,10 @@ export default Vue.extend({
     },
     autoHeight: {
       default: false,
+      type: Boolean
+    },
+    disabled: {
+      default: true,
       type: Boolean
     }
   },

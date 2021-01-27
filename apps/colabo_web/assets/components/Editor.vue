@@ -10,6 +10,7 @@
         :selection="selection"
         @input="onTextChange"
         @update:selection="handleSelection($event)"
+        :disabled="disabled"
       />
     <!--<textarea id="my-textarea" v-model="content" @input="onTextChange" :disabled="disabled"></textarea>-->
     <span>Last message received: type {{lastMsgMeta.type}}, from: {{lastMsgMeta.peerData}}</span>
@@ -240,10 +241,6 @@ export default {
 #push-interval {
   display: inline;
   width: 200px;
-}
-
-textarea:disabled {
-  background: red;
 }
 
 .blue {

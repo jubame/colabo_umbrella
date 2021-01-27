@@ -16,6 +16,7 @@
       autocorrect="off"
       autocapitalize="off"
       spellcheck="false"
+      :disabled="disabled"
     ></textarea>
   </div>
 </template>
@@ -47,6 +48,10 @@ export default Vue.extend({
     },
     autoHeight: {
       default: false,
+      type: Boolean
+    },
+    disabled: {
+      default: true,
       type: Boolean
     }
   },
@@ -349,7 +354,7 @@ function generateHtml(input, hilights) {
   overflow-x: hidden !important;
   overflow-y: auto !important;
   color: transparent !important;
-  background: none transparent !important;
+  /*background: none transparent !important;*/
   width: 100% !important;
   height: 100% !important;
   border-style: none !important;
@@ -372,5 +377,9 @@ function generateHtml(input, hilights) {
 
 .hta-highlight-even {
   background-color: #ddd;
+}
+
+textarea:disabled {
+  background: red;
 }
 </style>
