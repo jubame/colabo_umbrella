@@ -64,14 +64,14 @@ export default {
       this.pushSelectionRangeInterval
     );
 
-    EventBus.$on('new_diff', 
+    EventBus.$on('new_patch', 
       (msg) => {
         this.lastMsgMeta = {
-          type: 'new_diff',
+          type: 'new_patch',
           peerData: msg.peer_data
         }
         
-        this.onNewDiff(msg)
+        this.onNewPatch(msg)
       }
     );
 
@@ -191,10 +191,10 @@ export default {
       }
     },
 
-    onNewDiff(msg) {
+    onNewPatch(msg) {
       let wasPatchedArray
-      console.log('Editor.vue: new_diff event received')
-      this.apply_patch(msg.new_diff)
+      console.log('Editor.vue: new_patch event received')
+      this.apply_patch(msg.new_patch)
       console.log('***************')
     },
 

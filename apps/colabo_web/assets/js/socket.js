@@ -98,8 +98,8 @@ function Colabo(socket) {
   // Now that you are connected, you can join channels with a topic:
   let channel = socket.channel("lobby", {})
 
-  channel.on("new_diff", response => {
-    EventBus.$emit('new_diff', response/*.new_diff*/)
+  channel.on("new_patch", response => {
+    EventBus.$emit('new_patch', response/*.new_patch*/)
 
   })
 
@@ -112,8 +112,8 @@ function Colabo(socket) {
   function join(){
     return channel.join()
   }
-  function push(diff){
-    channel.push("new_diff", {diff: diff})
+  function push(patch){
+    channel.push("new_patch", {patch: patch})
     .receive("ok", response => {
       console.log("Server: push ok")
       console.log(response)

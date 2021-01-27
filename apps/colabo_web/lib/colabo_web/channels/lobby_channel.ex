@@ -13,11 +13,11 @@ defmodule ColaboWeb.LobbyChannel do
   end
 
 
-  def handle_in("new_diff", %{"diff" => diff}, socket) do
+  def handle_in("new_patch", %{"patch" => patch}, socket) do
     IO.puts("PatchStore.state es #{inspect(PatchStore.state())}")
-    PatchStore.add(diff)
-    broadcast_from!(socket, "new_diff", %{peer_data: socket.assigns.peer_data, new_diff: diff})
-    IO.inspect(diff)
+    PatchStore.add(patch)
+    broadcast_from!(socket, "new_patch", %{peer_data: socket.assigns.peer_data, new_patch: patch})
+    IO.inspect(patch)
     {:reply, :ok, socket}
   end
 
