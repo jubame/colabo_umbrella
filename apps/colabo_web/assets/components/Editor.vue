@@ -45,12 +45,10 @@ export default {
         pushIntervalTimer: null,
         disabled: true,
         lastSelectionContentLength: 0,
-        lastSelectionTime: null,
         lastMsgMeta: {
           type: null,
           peerData: null
         },
-        automaticSelectionInProgress: false
       }
   },
 
@@ -86,22 +84,10 @@ export default {
         }
         console.log("received selection_range")
         let textArea = document.getElementById("my-textarea");
-        //this.automaticSelectionInProgress = true
-        /*
-        https://stackoverflow.com/a/7486518
-        Cambiar selección de texto
-        */
-       /*
-        textArea.focus()
-        textArea.selectionStart = msg.range.start
-        textArea.selectionEnd = msg.range.end
-        */
-       this.segments = []
-       this.segments.push({ start: msg.range.start, end: msg.range.end, tag: { class: "blue" } });
-       //textArea.focus()
-       //textArea.setSelectionRange(msg.range.start, msg.range.end)
-       //this.automaticSelectionInProgress = false
-       
+
+        this.segments = []
+        this.segments.push({ start: msg.range.start, end: msg.range.end, tag: { class: "blue" } });
+      
       }
     );
 
@@ -181,11 +167,7 @@ export default {
 
 
     onTextChange(text) {
-      //console.log(text)
-      this.hasChanged = true
-      
-      //alert(this.content + "__" + this.previousContent)
-      
+      this.hasChanged = true      
     },
 
     handleSelection(e) {
