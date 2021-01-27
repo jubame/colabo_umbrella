@@ -1,7 +1,9 @@
 <template>
   <div id="editor">
-    <label for="push-interval">Push interval if textarea changed (in milliseconds):</label>
-    <input type="text" id="push-interval" v-model="pushInterval" @blur="resetInterval" >
+    <div>
+      <label for="push-interval">Push interval if textarea changed (in milliseconds):</label>
+      <input type="text" id="push-interval" v-model="pushInterval" @blur="resetInterval" >
+    </div>
     <HilightTextArea
         v-model="content"
         :segments="segments"
