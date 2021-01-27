@@ -7,7 +7,7 @@
         :segments="segments"
         :selection="selection"
         @input="onTextChange"
-        @update:selection="selection = $event"
+        @update:selection="handleSelection($event)"
       />
     <!--<textarea id="my-textarea" v-model="content" @input="onTextChange" :disabled="disabled"></textarea>-->
     <span>Last message received: type {{lastMsgMeta.type}}, from: {{lastMsgMeta.peerData}}</span>
@@ -125,9 +125,6 @@ export default {
       })
     });
 
-    // https://stackoverflow.com/a/58294874
-    document.addEventListener('selectionchange', this.handleSelection)
-
   },
 
 
@@ -170,6 +167,7 @@ export default {
     },
 
     handleSelection(e) {
+      this.selection = e
       const activeElement = document.activeElement
 
       // make sure this is your textarea
