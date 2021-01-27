@@ -211,7 +211,7 @@ export default {
 
     resetInterval(){
       clearInterval(this.pushIntervalTimer)
-      setInterval(
+      this.pushIntervalTimer = setInterval(
         this.push,
         this.pushInterval
       );
