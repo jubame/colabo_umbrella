@@ -19,7 +19,6 @@ defmodule ColaboWeb.UserSocket do
   # performing token verification on connect.
   @impl true
   def connect(_params, socket, connect_info) do
-    IO.puts("HOLA")
     peer_data = %{connect_info.peer_data | address: Tuple.to_list(connect_info.peer_data.address)}
     {:ok, assign(socket, :peer_data, peer_data)}
   end

@@ -3,7 +3,7 @@ defmodule ColaboWeb.LobbyChannel do
   alias Colabo.PatchStore
 
   def join("lobby", _message, socket) do
-    IO.inspect(PatchStore.state())
+    # IO.inspect(PatchStore.state())
     {:ok, socket}
   end
 
