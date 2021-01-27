@@ -168,27 +168,22 @@ export default {
 
     handleSelection(e) {
       this.selection = e
-      const activeElement = document.activeElement
 
-      // make sure this is your textarea
-      if (activeElement && activeElement.id === 'my-textarea') {
-
-        /*
-        Avoid sending range changes when text is being added or deleted,
-        because I push every this.pushInterval and new text might not have been
-        sent yet to the server (and therefore to the rest of clients).
-        I am not using this.hasContentChanged from onTextChange because both
-        onTextChange and this function fire at the same time (I would
-        need for onTextChange to execute first).
-        */
-        if(
-          this.lastSelectionContentLength == this.content.length){
-          this.hasSelectionChanged = true
-        }
-
-        this.lastSelectionContentLength = this.content.length
-        
+      /*
+      Avoid sending range changes when text is being added or deleted,
+      because I push every this.pushInterval and new text might not have been
+      sent yet to the server (and therefore to the rest of clients).
+      I am not using this.hasContentChanged from onTextChange because both
+      onTextChange and this function fire at the same time (I would
+      need for onTextChange to execute first).
+      */
+      if(
+        this.lastSelectionContentLength == this.content.length){
+        this.hasSelectionChanged = true
       }
+
+      this.lastSelectionContentLength = this.content.length
+             
     },
 
     onNewPatch(msg) {

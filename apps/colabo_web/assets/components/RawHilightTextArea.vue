@@ -4,7 +4,6 @@
       <div class="hta-highlights hta-text" v-html="html"></div>
     </div>
     <textarea
-      id="my-textarea"
       ref="input"
       v-bind="$attrs"
       v-model="input"
