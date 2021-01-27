@@ -31,7 +31,7 @@ export default {
       return {
         content: '',
         previousContent: '',
-        hasChanged: false,
+        hasContentChanged: false,
         hasSelectionChanged: false,
         selection: {
           start: 0,
@@ -135,7 +135,7 @@ export default {
 
     },
     push() {
-      if (this.hasChanged){
+      if (this.hasContentChanged){
         //alert("PUSH")
         console.log('---------------')
         console.log('Making patch:')
@@ -148,7 +148,7 @@ export default {
         colabo.push(patch)
         console.log('---------------')
 
-        this.hasChanged = false
+        this.hasContentChanged = false
         this.previousContent = this.content
         
       }
@@ -163,7 +163,7 @@ export default {
 
 
     onTextChange(text) {
-      this.hasChanged = true      
+      this.hasContentChanged = true      
     },
 
     handleSelection(e) {
@@ -177,7 +177,7 @@ export default {
         Avoid sending range changes when text is being added or deleted,
         because I push every this.pushInterval and new text might not have been
         sent yet to the server (and therefore to the rest of clients).
-        I am not using this.hasChanged from onTextChange because both
+        I am not using this.hasContentChanged from onTextChange because both
         onTextChange and this function fire at the same time (I would
         need for onTextChange to execute first).
         */
