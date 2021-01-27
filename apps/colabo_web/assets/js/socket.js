@@ -36,7 +36,6 @@ function initializeColabo() {
     }
   )
 
-  console.log(socket)
 
   socket.onError( () => {
     console.log("there was an error with the connection!")

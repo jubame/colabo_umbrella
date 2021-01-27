@@ -189,21 +189,17 @@ export default {
     },
 
     handleSelection(e) {
-      console.log("event es")
-      console.log(e)
       const activeElement = document.activeElement
 
       // make sure this is your textarea
       if (activeElement && activeElement.id === 'my-textarea') {
         
-        console.log("SELECT")
         this.range = {
           start: activeElement.selectionStart,
           end: activeElement.selectionEnd
         }
         // do something with your range
-        console.log(this.range.start)
-        console.log(this.range.end)
+
         /*
         Avoid sending range changes when text is being added or deleted,
         because I push every this.pushInterval and new text might not have been
